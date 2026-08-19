@@ -591,7 +591,7 @@ function getCategory(name, detail) {
         name === "ルーフ"
     ) {
 
-        return "屋根";
+        return "ルーフ";
     }
 
 
@@ -601,7 +601,7 @@ function getCategory(name, detail) {
         name === "マフラー"
     ) {
 
-        return "排気口";
+        return "マフラー";
     }
 
 
