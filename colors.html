@@ -1,0 +1,1518 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>ギャング・半グレカラー</title>
+
+<style>
+* {
+    box-sizing: border-box;
+}
+
+:root {
+    --bg: #f3f4f6;
+    --panel: #ffffff;
+    --panel2: #f8f9fa;
+    --text: #15171a;
+    --sub: #6b7280;
+    --border: #d7dbe0;
+    --button: #ffffff;
+    --button-hover: #eeeeee;
+}
+
+body.dark {
+    --bg: #101214;
+    --panel: #1a1d20;
+    --panel2: #131619;
+    --text: #f4f4f4;
+    --sub: #aeb5bd;
+    --border: #343a40;
+    --button: #202428;
+    --button-hover: #2b3035;
+}
+
+body {
+    margin: 0;
+    font-family:
+        "Yu Gothic",
+        "Meiryo",
+        sans-serif;
+
+    background: var(--bg);
+    color: var(--text);
+
+    transition:
+        background .2s,
+        color .2s;
+}
+
+
+/* ==============================
+   ヘッダー
+============================== */
+
+header {
+    min-height: 70px;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    gap: 20px;
+
+    padding: 12px 20px;
+
+    background: var(--panel);
+
+    border-bottom:
+        1px solid var(--border);
+
+    position: sticky;
+    top: 0;
+    z-index: 100;
+}
+
+.site-title {
+    font-size: 24px;
+    font-weight: 800;
+
+    white-space: nowrap;
+}
+
+.header-buttons {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+
+    flex-wrap: wrap;
+}
+
+.nav-button,
+#themeButton {
+    appearance: none;
+
+    border:
+        1px solid var(--border);
+
+    border-radius: 8px;
+
+    padding: 9px 14px;
+
+    background: var(--button);
+    color: var(--text);
+
+    font-weight: 700;
+    font-size: 13px;
+
+    cursor: pointer;
+
+    text-decoration: none;
+
+    transition:
+        background .15s,
+        transform .15s;
+}
+
+.nav-button:hover,
+#themeButton:hover,
+.copy-button:hover {
+    background: var(--button-hover);
+}
+
+.nav-button:active,
+#themeButton:active,
+.copy-button:active {
+    transform: scale(.97);
+}
+
+.nav-button.active {
+    background: #8c299c;
+    border-color: #a541b5;
+    color: white;
+}
+
+
+/* ==============================
+   メイン
+============================== */
+
+main {
+    width: 100%;
+    max-width: 1800px;
+
+    margin: 0 auto;
+
+    padding: 20px;
+}
+
+
+/* ==============================
+   検索
+============================== */
+
+.search-wrap {
+    margin-bottom: 25px;
+}
+
+#colorSearch {
+    width: 100%;
+
+    padding: 14px 16px;
+
+    border:
+        1px solid var(--border);
+
+    border-radius: 9px;
+
+    background: var(--panel);
+    color: var(--text);
+
+    font-size: 15px;
+
+    outline: none;
+}
+
+#colorSearch:focus {
+    border-color: #777;
+}
+
+
+/* ==============================
+   グループ
+============================== */
+
+.color-section {
+    margin-bottom: 34px;
+}
+
+.section-title {
+    display: flex;
+    align-items: center;
+
+    gap: 10px;
+
+    margin: 0 0 14px;
+
+    font-size: 22px;
+    font-weight: 800;
+}
+
+.section-title::after {
+    content: "";
+
+    height: 1px;
+
+    flex: 1;
+
+    background: var(--border);
+}
+
+
+/* ==============================
+   カード一覧
+============================== */
+
+.team-grid {
+    display: grid;
+
+    grid-template-columns:
+        repeat(4, minmax(240px, 1fr));
+
+    gap: 12px;
+}
+
+
+/* ==============================
+   チームカード
+============================== */
+
+.team-card {
+    --team-color: #777;
+    --team-text: #fff;
+
+    overflow: hidden;
+
+    border:
+        1px solid var(--border);
+
+    border-radius: 11px;
+
+    background: var(--panel);
+
+    min-height: 190px;
+}
+
+
+/* チームカラーのライン */
+
+.team-color-bar {
+    height: 9px;
+
+    background:
+        var(--team-color);
+}
+
+
+/* チーム名 */
+
+.team-name {
+    display: flex;
+    align-items: center;
+
+    gap: 9px;
+
+    padding: 13px 14px;
+
+    font-size: 18px;
+    font-weight: 800;
+
+    background:
+        color-mix(
+            in srgb,
+            var(--team-color) 28%,
+            var(--panel)
+        );
+
+    border-bottom:
+        1px solid var(--border);
+}
+
+.team-dot {
+    width: 21px;
+    height: 21px;
+
+    flex: 0 0 21px;
+
+    border-radius: 50%;
+
+    background:
+        var(--team-color);
+
+    border:
+        1px solid rgba(255,255,255,.35);
+
+    box-shadow:
+        0 0 0 1px rgba(0,0,0,.2);
+}
+
+
+/* ==============================
+   カラー内容
+============================== */
+
+.team-colors {
+    padding: 5px 14px 10px;
+}
+
+.color-item {
+    padding: 10px 0;
+
+    border-bottom:
+        1px solid var(--border);
+}
+
+.color-item:last-child {
+    border-bottom: none;
+}
+
+.color-label {
+    margin-bottom: 5px;
+
+    color: var(--sub);
+
+    font-size: 12px;
+    font-weight: 700;
+}
+
+.color-name {
+    font-size: 15px;
+    font-weight: 600;
+
+    line-height: 1.5;
+}
+
+
+/* RGB */
+
+.rgb-row {
+    display: flex;
+    align-items: center;
+
+    gap: 8px;
+
+    flex-wrap: wrap;
+}
+
+.rgb-preview {
+    width: 21px;
+    height: 21px;
+
+    flex: 0 0 21px;
+
+    border-radius: 4px;
+
+    border:
+        1px solid var(--border);
+}
+
+.rgb-value,
+.hex-value {
+    font-size: 14px;
+    font-weight: 600;
+}
+
+.hex-row {
+    display: flex;
+    align-items: center;
+
+    gap: 8px;
+
+    margin-top: 6px;
+
+    padding-left: 29px;
+
+    flex-wrap: wrap;
+}
+
+
+/* ==============================
+   コピーボタン
+============================== */
+
+.copy-button {
+    margin-left: auto;
+
+    padding: 5px 8px;
+
+    border:
+        1px solid var(--border);
+
+    border-radius: 6px;
+
+    background: var(--button);
+    color: var(--text);
+
+    font-size: 11px;
+    font-weight: 700;
+
+    cursor: pointer;
+}
+
+
+/* ==============================
+   検索結果なし
+============================== */
+
+.empty-message {
+    display: none;
+
+    padding: 25px;
+
+    text-align: center;
+
+    color: var(--sub);
+}
+
+
+/* ==============================
+   注釈
+============================== */
+
+.page-note {
+    margin: 30px 0 10px;
+
+    text-align: center;
+
+    color: var(--sub);
+
+    font-size: 12px;
+}
+
+
+/* ==============================
+   レスポンシブ
+============================== */
+
+@media (max-width: 1250px) {
+
+    .team-grid {
+        grid-template-columns:
+            repeat(3, minmax(230px, 1fr));
+    }
+
+}
+
+@media (max-width: 900px) {
+
+    .team-grid {
+        grid-template-columns:
+            repeat(2, minmax(220px, 1fr));
+    }
+
+}
+
+@media (max-width: 600px) {
+
+    header {
+        align-items: flex-start;
+        flex-direction: column;
+    }
+
+    .site-title {
+        font-size: 20px;
+    }
+
+    .header-buttons {
+        width: 100%;
+    }
+
+    .team-grid {
+        grid-template-columns: 1fr;
+    }
+
+    main {
+        padding: 12px;
+    }
+
+}
+</style>
+</head>
+
+
+<body>
+
+<header>
+
+    <div class="site-title">
+        ギャング・半グレカラー
+    </div>
+
+    <div class="header-buttons">
+
+        <a
+            href="index.html"
+            class="nav-button"
+        >
+            🔧 メカニック
+        </a>
+
+        <a
+            href="colors.html"
+            class="nav-button active"
+        >
+            🎨 ギャング・半グレカラー
+        </a>
+
+        <button id="themeButton">
+            🌙 ダークモード
+        </button>
+
+    </div>
+
+</header>
+
+
+<main>
+
+    <!-- 検索 -->
+
+    <div class="search-wrap">
+
+        <input
+            type="text"
+            id="colorSearch"
+            placeholder="🔍 チーム名・色名・RGB・HEXで検索..."
+        >
+
+    </div>
+
+
+    <!-- ==============================
+         ギャング
+    ============================== -->
+
+    <section class="color-section">
+
+        <h2 class="section-title">
+            ギャングカラー
+        </h2>
+
+        <div
+            class="team-grid"
+            id="gangGrid"
+        ></div>
+
+    </section>
+
+
+    <!-- ==============================
+         半グレ
+    ============================== -->
+
+    <section class="color-section">
+
+        <h2 class="section-title">
+            半グレカラー
+        </h2>
+
+        <div
+            class="team-grid"
+            id="hangureGrid"
+        ></div>
+
+    </section>
+
+
+    <!-- ==============================
+         個人医
+    ============================== -->
+
+    <section class="color-section">
+
+        <h2 class="section-title">
+            個人医カラー
+        </h2>
+
+        <div
+            class="team-grid"
+            id="doctorGrid"
+        ></div>
+
+    </section>
+
+
+    <!-- ==============================
+         カルテル
+    ============================== -->
+
+    <section class="color-section">
+
+        <h2 class="section-title">
+            カルテルカラー
+        </h2>
+
+        <div
+            class="team-grid"
+            id="cartelGrid"
+        ></div>
+
+    </section>
+
+
+    <div
+        id="emptyMessage"
+        class="empty-message"
+    >
+        該当するカラーがありません
+    </div>
+
+
+    <div class="page-note">
+        ※ カードの色は識別用です。ゲーム内の実際の車両カラーとは多少異なる場合があります。
+    </div>
+
+</main>
+
+
+<script>
+
+/* ==========================================
+   カラーデータ
+
+   cardColor =
+   チーム名の横に書かれていた色を
+   見分けやすく再現するための表示色
+
+   実際のRGBデータとは別物
+========================================== */
+
+const colorData = {
+
+    gang: [
+
+        {
+            name: "黒【LAZOS】",
+            cardColor: "#090909",
+
+            colors: [
+
+                {
+                    label: "メイン・サブ",
+                    name: "ブラック【メタリック】"
+                },
+
+                {
+                    label: "パール",
+                    name: "ブラック【メタリック】"
+                }
+
+            ]
+        },
+
+
+        {
+            name: "ピンク【Ohio】",
+            cardColor: "#d94686",
+
+            colors: [
+
+                {
+                    label: "メイン",
+                    rgb: [190, 72, 130]
+                },
+
+                {
+                    label: "サブ",
+                    rgb: [0, 0, 0]
+                },
+
+                {
+                    label: "パール",
+                    name: "ブラック【マット】"
+                }
+
+            ]
+        },
+
+
+        {
+            name: "青【AMBER】",
+            cardColor: "#1264c4",
+
+            colors: [
+
+                {
+                    label: "メイン・サブ",
+                    name: "アンダイドブルー【カメレオン】"
+                }
+
+            ]
+        },
+
+
+        {
+            name: "水色【404 Not Found】",
+            cardColor: "#5ccdf5",
+
+            colors: [
+
+                {
+                    label: "メイン・サブ",
+                    rgb: [122, 156, 255],
+                    finish: "クラシック"
+                },
+
+                {
+                    label: "パール",
+                    name: "ブラック【マット】"
+                }
+
+            ]
+        },
+
+
+        {
+            name: "灰色【OTHELLO】",
+            cardColor: "#999999",
+
+            colors: [
+
+                {
+                    label: "メイン・サブ",
+                    name: "モノクローム【カメレオン】"
+                }
+
+            ]
+        },
+
+
+        {
+            name: "緑【CLOVER】",
+            cardColor: "#278532",
+
+            colors: [
+
+                {
+                    label: "メイン・サブ",
+                    name: "ライムグリーン【メタリック】"
+                }
+
+            ]
+        },
+
+
+        {
+            name: "オレンジ【椛】",
+            cardColor: "#ff6500",
+
+            colors: [
+
+                {
+                    label: "メイン・サブ",
+                    name: "ブライトオレンジ【クラシック】"
+                }
+
+            ]
+        },
+
+
+        {
+            name: "黄色【Honey Crow】",
+            cardColor: "#f2d900",
+
+            colors: [
+
+                {
+                    label: "メイン・サブ",
+                    name: "レースイエロー【メタリック】"
+                },
+
+                {
+                    label: "パール",
+                    name: "レースイエロー【カメレオン】"
+                }
+
+            ]
+        },
+
+
+        {
+            name: "紫【Velvet Iris】",
+            cardColor: "#6400ab",
+
+            colors: [
+
+                {
+                    label: "メイン・サブ",
+                    rgb: [100, 0, 171]
+                },
+
+                {
+                    label: "パール",
+                    name: "ブラック【マット】"
+                }
+
+            ]
+        }
+
+    ],
+
+
+    hangure: [
+
+        {
+            name: "半グレ【濃い赤】",
+            cardColor: "#790e18",
+
+            colors: [
+
+                {
+                    label: "メイン・サブ",
+                    name: "カベルネレッド"
+                }
+
+            ]
+        },
+
+
+        {
+            name: "半グレ【赤】",
+            cardColor: "#dc1e2d",
+
+            colors: [
+
+                {
+                    label: "メイン",
+                    name: "レッド【メタリック】"
+                },
+
+                {
+                    label: "サブ",
+                    name: "フォーミュラレッド【メタリック】"
+                },
+
+                {
+                    label: "パール",
+                    name: "フォーミュラレッド【メタリック】"
+                }
+
+            ]
+        },
+
+
+        {
+            name: "半グレ【茶色】",
+            cardColor: "#865237",
+
+            colors: [
+
+                {
+                    label: "メイン・サブ",
+                    name: "ダークアース【マット】"
+                },
+
+                {
+                    label: "パール",
+                    name: "ブラック【マット】"
+                }
+
+            ]
+        }
+
+    ],
+
+
+    doctor: [
+
+        {
+            name: "個人医",
+            cardColor: "#f1f1f1",
+
+            colors: [
+
+                {
+                    label: "メイン・サブ",
+                    name: "アイスホワイト【メタリック】"
+                }
+
+            ]
+        }
+
+    ],
+
+
+    cartel: [
+
+        {
+            name: "カルテル1",
+            cardColor: "#6c351b",
+
+            colors: [
+
+                {
+                    label: "メイン・サブ",
+                    name: "チョコレートブラウン【メタリック】"
+                },
+
+                {
+                    label: "パール",
+                    name: "イエロー【メタリック】"
+                }
+
+            ]
+        }
+
+    ]
+
+};
+
+
+/* ==========================================
+   RGB → HEX
+========================================== */
+
+function rgbToHex(rgb) {
+
+    return "#" +
+        rgb.map(value =>
+            value
+                .toString(16)
+                .padStart(2, "0")
+        )
+        .join("")
+        .toUpperCase();
+
+}
+
+
+/* ==========================================
+   RGB文字列
+========================================== */
+
+function getRgbText(rgb) {
+
+    return `rgb(${rgb[0]}, ${rgb[1]}, ${rgb[2]})`;
+
+}
+
+
+/* ==========================================
+   コピー
+========================================== */
+
+async function copyText(
+    text,
+    button
+) {
+
+    try {
+
+        await navigator
+            .clipboard
+            .writeText(text);
+
+
+        const original =
+            button.textContent;
+
+
+        button.textContent =
+            "コピー済み";
+
+
+        setTimeout(() => {
+
+            button.textContent =
+                original;
+
+        }, 800);
+
+    }
+
+    catch {
+
+        alert(
+            "コピーできませんでした。"
+        );
+
+    }
+
+}
+
+
+/* ==========================================
+   RGB項目
+========================================== */
+
+function createRgbContent(color) {
+
+    const wrapper =
+        document.createElement("div");
+
+
+    const rgb =
+        getRgbText(color.rgb);
+
+
+    const hex =
+        rgbToHex(color.rgb);
+
+
+    /* RGB */
+
+    const rgbRow =
+        document.createElement("div");
+
+
+    rgbRow.className =
+        "rgb-row";
+
+
+    const preview =
+        document.createElement("span");
+
+
+    preview.className =
+        "rgb-preview";
+
+
+    preview.style.background =
+        rgb;
+
+
+    const rgbValue =
+        document.createElement("span");
+
+
+    rgbValue.className =
+        "rgb-value";
+
+
+    rgbValue.textContent =
+        rgb;
+
+
+    if (color.finish) {
+
+        rgbValue.textContent +=
+            `【${color.finish}】`;
+
+    }
+
+
+    const rgbButton =
+        document.createElement("button");
+
+
+    rgbButton.className =
+        "copy-button";
+
+
+    rgbButton.textContent =
+        "RGBコピー";
+
+
+    rgbButton.addEventListener(
+        "click",
+        () => {
+
+            copyText(
+                rgb,
+                rgbButton
+            );
+
+        }
+    );
+
+
+    rgbRow.append(
+        preview,
+        rgbValue,
+        rgbButton
+    );
+
+
+    /* HEX */
+
+    const hexRow =
+        document.createElement("div");
+
+
+    hexRow.className =
+        "hex-row";
+
+
+    const hexValue =
+        document.createElement("span");
+
+
+    hexValue.className =
+        "hex-value";
+
+
+    hexValue.textContent =
+        hex;
+
+
+    const hexButton =
+        document.createElement("button");
+
+
+    hexButton.className =
+        "copy-button";
+
+
+    hexButton.textContent =
+        "HEXコピー";
+
+
+    hexButton.addEventListener(
+        "click",
+        () => {
+
+            copyText(
+                hex,
+                hexButton
+            );
+
+        }
+    );
+
+
+    hexRow.append(
+        hexValue,
+        hexButton
+    );
+
+
+    wrapper.append(
+        rgbRow,
+        hexRow
+    );
+
+
+    return wrapper;
+
+}
+
+
+/* ==========================================
+   チームカード作成
+========================================== */
+
+function createTeamCard(team) {
+
+    const card =
+        document.createElement("article");
+
+
+    card.className =
+        "team-card";
+
+
+    card.style.setProperty(
+        "--team-color",
+        team.cardColor
+    );
+
+
+    /* 検索用 */
+
+    const searchData = [
+        team.name,
+
+        ...team.colors.map(color => {
+
+            if (color.rgb) {
+
+                return (
+                    getRgbText(color.rgb) +
+                    " " +
+                    rgbToHex(color.rgb)
+                );
+
+            }
+
+            return color.name || "";
+
+        })
+
+    ].join(" ")
+     .toLowerCase();
+
+
+    card.dataset.search =
+        searchData;
+
+
+    /* 上ライン */
+
+    const bar =
+        document.createElement("div");
+
+
+    bar.className =
+        "team-color-bar";
+
+
+    /* チーム名 */
+
+    const title =
+        document.createElement("div");
+
+
+    title.className =
+        "team-name";
+
+
+    const dot =
+        document.createElement("span");
+
+
+    dot.className =
+        "team-dot";
+
+
+    const titleText =
+        document.createElement("span");
+
+
+    titleText.textContent =
+        team.name;
+
+
+    title.append(
+        dot,
+        titleText
+    );
+
+
+    /* カラー */
+
+    const colors =
+        document.createElement("div");
+
+
+    colors.className =
+        "team-colors";
+
+
+    team.colors.forEach(color => {
+
+        const item =
+            document.createElement("div");
+
+
+        item.className =
+            "color-item";
+
+
+        const label =
+            document.createElement("div");
+
+
+        label.className =
+            "color-label";
+
+
+        label.textContent =
+            color.label;
+
+
+        item.appendChild(label);
+
+
+        /* RGBが存在する */
+
+        if (color.rgb) {
+
+            item.appendChild(
+                createRgbContent(color)
+            );
+
+        }
+
+        /* 色名のみ */
+
+        else {
+
+            const value =
+                document.createElement("div");
+
+
+            value.className =
+                "color-name";
+
+
+            value.textContent =
+                color.name;
+
+
+            /*
+             色名にはコピーボタンを
+             あえて付けない
+            */
+
+            item.appendChild(value);
+
+        }
+
+
+        colors.appendChild(item);
+
+    });
+
+
+    card.append(
+        bar,
+        title,
+        colors
+    );
+
+
+    return card;
+
+}
+
+
+/* ==========================================
+   グループ描画
+========================================== */
+
+function renderGroup(
+    data,
+    elementId
+) {
+
+    const grid =
+        document.getElementById(
+            elementId
+        );
+
+
+    grid.innerHTML = "";
+
+
+    data.forEach(team => {
+
+        grid.appendChild(
+            createTeamCard(team)
+        );
+
+    });
+
+}
+
+
+/* ==========================================
+   全表示
+========================================== */
+
+renderGroup(
+    colorData.gang,
+    "gangGrid"
+);
+
+
+renderGroup(
+    colorData.hangure,
+    "hangureGrid"
+);
+
+
+renderGroup(
+    colorData.doctor,
+    "doctorGrid"
+);
+
+
+renderGroup(
+    colorData.cartel,
+    "cartelGrid"
+);
+
+
+/* ==========================================
+   検索
+========================================== */
+
+const colorSearch =
+    document.getElementById(
+        "colorSearch"
+    );
+
+
+const emptyMessage =
+    document.getElementById(
+        "emptyMessage"
+    );
+
+
+colorSearch.addEventListener(
+    "input",
+    () => {
+
+        const keyword =
+            colorSearch
+                .value
+                .trim()
+                .toLowerCase();
+
+
+        const cards =
+            document.querySelectorAll(
+                ".team-card"
+            );
+
+
+        let visibleCount = 0;
+
+
+        cards.forEach(card => {
+
+            const visible =
+                card.dataset.search
+                    .includes(keyword);
+
+
+            card.style.display =
+                visible
+                    ? ""
+                    : "none";
+
+
+            if (visible) {
+
+                visibleCount++;
+
+            }
+
+        });
+
+
+        emptyMessage.style.display =
+            visibleCount === 0
+                ? "block"
+                : "none";
+
+    }
+);
+
+
+/* ==========================================
+   ダークモード
+========================================== */
+
+const themeButton =
+    document.getElementById(
+        "themeButton"
+    );
+
+
+function updateThemeButton() {
+
+    const dark =
+        document.body
+            .classList
+            .contains("dark");
+
+
+    themeButton.textContent =
+        dark
+            ? "☀️ 通常モード"
+            : "🌙 ダークモード";
+
+}
+
+
+themeButton.addEventListener(
+    "click",
+    () => {
+
+        document.body
+            .classList
+            .toggle("dark");
+
+
+        const dark =
+            document.body
+                .classList
+                .contains("dark");
+
+
+        localStorage.setItem(
+            "theme",
+            dark
+                ? "dark"
+                : "light"
+        );
+
+
+        updateThemeButton();
+
+    }
+);
+
+
+/* 前回テーマ */
+
+if (
+    localStorage.getItem("theme")
+    === "dark"
+) {
+
+    document.body
+        .classList
+        .add("dark");
+
+}
+
+
+updateThemeButton();
+
+</script>
+
+</body>
+</html>

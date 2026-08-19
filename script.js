@@ -1,0 +1,1697 @@
+// ==========================================
+// ラフシティメカニック
+// script.js
+// ==========================================
+
+
+// ==========================================
+// HTML要素
+// ==========================================
+
+const totalPrice =
+    document.getElementById("totalPrice");
+
+const copyButton =
+    document.getElementById("copyButton");
+
+const resetButton =
+    document.getElementById("resetButton");
+
+const themeButton =
+    document.getElementById("themeButton");
+
+
+const orderInput =
+    document.getElementById("orderInput");
+
+const orderSummary =
+    document.getElementById("orderSummary");
+
+const orderResult =
+    document.getElementById("orderResult");
+
+const analyzeButton =
+    document.getElementById("analyzeButton");
+
+
+const exteriorCount =
+    document.getElementById("exteriorCount");
+
+const colorCount =
+    document.getElementById("colorCount");
+
+
+const priceItems =
+    document.querySelectorAll(".price-item");
+
+const radioItems =
+    document.querySelectorAll(
+        'input[type="radio"].price-item'
+    );
+
+const saleQuantities =
+    document.querySelectorAll(".sale-quantity");
+
+
+// ==========================================
+// localStorage
+// ==========================================
+
+const MECHANIC_STORAGE_KEY =
+    "roughCityMechanicStateV1";
+
+
+// ==========================================
+// 外装 / カラー選択肢
+// ==========================================
+
+function createCountOptions(select, max) {
+
+    select.innerHTML = "";
+
+    for (let i = 0; i <= max; i++) {
+
+        const option =
+            document.createElement("option");
+
+        option.value =
+            String(i);
+
+        option.textContent =
+            `${i}か所`;
+
+        select.appendChild(option);
+    }
+}
+
+
+createCountOptions(
+    exteriorCount,
+    50
+);
+
+createCountOptions(
+    colorCount,
+    20
+);
+
+
+// ==========================================
+// CATEGORY表示順
+// SUMMARY / DETAIL LIST共通
+// ==========================================
+
+const categoryOrder = {
+
+    "バンパー": 10,
+
+    "スカート": 20,
+
+    "ボンネット": 30,
+
+    "屋根": 40,
+
+    "排気口": 50,
+
+    "スポイラー": 60,
+
+    "シートカラー": 70,
+
+    "カスタムホイール": 80,
+
+    "内装カスタム": 90,
+
+    "外装カスタム": 100,
+
+    "ロールケージ": 110,
+
+    "ナンバープレート": 120,
+
+    "カラー": 130,
+
+    "フィルムキット": 140,
+
+    "リバリー": 150,
+
+    "クラクション": 160,
+
+    "ヘッドライト": 170,
+
+    "アンダーネオン": 180,
+
+    "タイヤスモーク": 190,
+
+    "ニトロパージ": 200,
+
+    // 未登録は必ず最後
+    "その他": 9999
+};
+
+
+// ==========================================
+// DETAIL LIST NAME表示順
+// ==========================================
+
+const nameOrder = {
+
+    // バンパー
+
+    "リアバンパー": 10,
+
+    "フロントバンパー": 20,
+
+    "グリル": 30,
+
+
+    // スカート
+
+    "左フェンダー": 40,
+
+    "右フェンダー": 50,
+
+    "右フェンダー（バニティホルダー）": 60,
+
+    "サイドスカート": 70,
+
+    "スカート": 80,
+
+
+    // ボンネット
+
+    "ボンネット": 90,
+
+    "フード": 100,
+
+
+    // 屋根
+
+    "ルーフ": 110,
+
+
+    // 排気
+
+    "マフラー": 120,
+
+
+    // スポイラー
+
+    "スポイラー": 130,
+
+
+    // シート
+
+    "シート": 140,
+
+
+    // ホイール本体
+
+    "Wheels": 150,
+
+    "ホイールリム": 160,
+
+    "ホイールリム（バイク用）": 170,
+
+
+    // 内装
+
+    "ドアスピーカー": 180,
+
+    "ダイヤル": 190,
+
+    "ステアリングホイール": 200,
+
+
+    // 外装
+
+    "トリムA": 210,
+
+    "トリムB": 220,
+
+    "アンテナ": 230,
+
+    "アーチカバー": 240,
+
+    "エンジンブロック": 250,
+
+    "フィルター": 260,
+
+    "ストラットタワーバー": 270,
+
+    "トランク": 280,
+
+    "突力装置": 290,
+
+    "燃料タンク": 300,
+
+    "エクストラパーツ": 310,
+
+
+    // ロールケージ
+
+    "ロールケージ": 320,
+
+
+    // ナンバープレート
+
+    "バニティプレート": 330,
+
+    "カスタムプレート": 340,
+
+    "ナンバープレートホルダー": 350,
+
+    "ナンバープレート": 360,
+
+
+    // カラー
+
+    "ダッシュボード": 370,
+
+    "メインカラー": 380,
+
+    "プライマリ": 390,
+
+    "サブカラー": 400,
+
+    "セカンダリー": 410,
+
+    "パール": 420,
+
+    "パールセント": 430,
+
+    "ホイール": 440,
+
+    "ホイールカラー": 450,
+
+    "内装": 460,
+
+    "インテリア": 470,
+
+
+    // フィルム
+
+    "ウィンドウの色合い": 480,
+
+    "ガラススモーク": 490,
+
+
+    // リバリー
+
+    "ラッピング": 500,
+
+    "リバリー": 510,
+
+
+    // クラクション
+
+    "クラクション": 520,
+
+
+    // ヘッドライト
+
+    "ヘッドライト兼アンダーライト": 530,
+
+    "ヘッドライト": 540,
+
+
+    // アンダーネオン
+
+    "アンダーカラー変更": 550,
+
+    "アンダーネオンカラー": 560,
+
+
+    // タイヤスモーク
+
+    "タイヤスモーク": 570,
+
+
+    // ニトロパージ
+
+    "ニトロ冷却噴射時カラー": 580,
+
+    "ニトロパージコントロール": 590
+};
+
+
+// ==========================================
+// 合計金額
+// ==========================================
+
+function calculateTotal() {
+
+    let total = 0;
+
+
+    // 性能カスタム
+
+    priceItems.forEach((item) => {
+
+        if (item.checked) {
+
+            total +=
+                Number(
+                    item.dataset.price
+                );
+        }
+    });
+
+
+    // 外装
+    // 1か所 ¥100,000
+
+    total +=
+        Number(
+            exteriorCount.value
+        ) * 100000;
+
+
+    // カラー
+    // 1か所 ¥50,000
+
+    total +=
+        Number(
+            colorCount.value
+        ) * 50000;
+
+
+    // 販売
+
+    saleQuantities.forEach((input) => {
+
+        const quantity =
+            Math.max(
+                0,
+                Number(input.value) || 0
+            );
+
+        const price =
+            Number(
+                input.dataset.price
+            );
+
+        total +=
+            quantity * price;
+    });
+
+
+    // 表示
+
+    totalPrice.textContent =
+        "¥" +
+        total.toLocaleString("ja-JP");
+}
+
+
+// ==========================================
+// 状態保存
+// ==========================================
+
+function saveMechanicState() {
+
+    const state = {
+
+        orderInput:
+            orderInput.value,
+
+        exteriorCount:
+            exteriorCount.value,
+
+        colorCount:
+            colorCount.value,
+
+        priceItems:
+            Array.from(priceItems).map(
+                (item) => {
+
+                    return {
+                        checked:
+                            item.checked
+                    };
+                }
+            ),
+
+        saleQuantities:
+            Array.from(saleQuantities).map(
+                (input) => {
+
+                    return {
+                        value:
+                            input.value
+                    };
+                }
+            )
+    };
+
+
+    try {
+
+        localStorage.setItem(
+            MECHANIC_STORAGE_KEY,
+            JSON.stringify(state)
+        );
+
+    } catch (error) {
+
+        console.error(
+            "メカニック状態の保存に失敗しました。",
+            error
+        );
+    }
+}
+
+
+// ==========================================
+// カラー項目判定
+// ==========================================
+
+function isColorItem(name, detail) {
+
+    const colorNames = [
+
+        "メインカラー",
+
+        "サブカラー",
+
+        "プライマリ",
+
+        "セカンダリー",
+
+        "パール",
+
+        "パールセント",
+
+        "ホイールカラー",
+
+        "インテリア",
+
+        "内装"
+    ];
+
+
+    if (
+        colorNames.includes(name)
+    ) {
+
+        return true;
+    }
+
+
+    // Wheelsはホイール本体
+    // ホイールはカラー
+
+    if (
+        name === "ホイール"
+    ) {
+
+        return true;
+    }
+
+
+    // ダッシュボードは
+    // パーツ変更とカラー変更が存在
+
+    if (
+        name === "ダッシュボード"
+    ) {
+
+        const colorWords =
+            /メタリック|マット|クローム|金属|パール|カラー|ブラック|ホワイト|レッド|ブルー|グリーン|イエロー|オレンジ|パープル|ピンク|シルバー|ゴールド|グレー/i;
+
+
+        if (
+            colorWords.test(detail)
+        ) {
+
+            return true;
+        }
+    }
+
+
+    return false;
+}
+
+
+// ==========================================
+// カテゴリ判定
+// ==========================================
+
+function getCategory(name, detail) {
+
+
+    // カラー
+
+    if (
+        isColorItem(name, detail)
+    ) {
+
+        return "カラー";
+    }
+
+
+    // バンパー
+
+    if (
+        name === "リアバンパー" ||
+        name === "フロントバンパー" ||
+        name === "グリル"
+    ) {
+
+        return "バンパー";
+    }
+
+
+    // スカート
+
+    if (
+        name === "左フェンダー" ||
+        name === "右フェンダー" ||
+        name === "右フェンダー（バニティホルダー）" ||
+        name === "サイドスカート" ||
+        name === "スカート"
+    ) {
+
+        return "スカート";
+    }
+
+
+    // ボンネット
+
+    if (
+        name === "ボンネット" ||
+        name === "フード"
+    ) {
+
+        return "ボンネット";
+    }
+
+
+    // 屋根
+
+    if (
+        name === "ルーフ"
+    ) {
+
+        return "屋根";
+    }
+
+
+    // 排気口
+
+    if (
+        name === "マフラー"
+    ) {
+
+        return "排気口";
+    }
+
+
+    // スポイラー
+
+    if (
+        name === "スポイラー"
+    ) {
+
+        return "スポイラー";
+    }
+
+
+    // シート
+
+    if (
+        name === "シート"
+    ) {
+
+        return "シートカラー";
+    }
+
+
+    // カスタムホイール
+
+    if (
+        name === "Wheels" ||
+        name === "ホイールリム" ||
+        name === "ホイールリム（バイク用）"
+    ) {
+
+        return "カスタムホイール";
+    }
+
+// ======================================
+// 内装
+// ======================================
+
+if (
+    name === "ドアスピーカー" ||
+    name === "ダッシュボード" ||
+    name === "ダイヤル" ||
+    name === "ステアリングホイール" ||
+    name === "メーター" ||
+    name === "オーナメント"
+) {
+
+    return "内装カスタム";
+}
+
+const exteriorNames = [
+
+    "トリムA",
+
+    "トリムB",
+
+    "アンテナ",
+
+    "アーチカバー",
+
+    "エンジンブロック",
+
+    "フィルター",
+
+    "ストラットタワーバー",
+
+    "エアフィルター",
+
+    "エンジンストラット",
+
+    "トランク",
+
+    "突力装置",
+
+    "燃料タンク",
+
+    "エクストラパーツ"
+];
+
+    if (
+        exteriorNames.includes(name)
+    ) {
+
+        return "外装カスタム";
+    }
+
+
+    // ロールケージ
+
+    if (
+        name === "ロールケージ"
+    ) {
+
+        return "ロールケージ";
+    }
+
+
+    // ナンバープレート
+
+    if (
+        name === "バニティプレート" ||
+        name === "カスタムプレート" ||
+        name === "ナンバープレートホルダー" ||
+        name === "ナンバープレート"
+    ) {
+
+        return "ナンバープレート";
+    }
+
+
+    // フィルムキット
+
+    if (
+        name === "ウィンドウの色合い" ||
+        name === "ガラススモーク"
+    ) {
+
+        return "フィルムキット";
+    }
+
+
+    // リバリー
+
+    if (
+        name === "ラッピング" ||
+        name === "リバリー"
+    ) {
+
+        return "リバリー";
+    }
+
+
+    // クラクション
+
+    if (
+        name === "クラクション"
+    ) {
+
+        return "クラクション";
+    }
+
+
+    // ヘッドライト
+
+    if (
+        name === "ヘッドライト兼アンダーライト" ||
+        name === "ヘッドライト"
+    ) {
+
+        return "ヘッドライト";
+    }
+
+
+    // アンダーネオン
+
+    if (
+        name === "アンダーカラー変更" ||
+        name === "アンダーネオンカラー"
+    ) {
+
+        return "アンダーネオン";
+    }
+
+
+    // タイヤスモーク
+
+    if (
+        name === "タイヤスモーク"
+    ) {
+
+        return "タイヤスモーク";
+    }
+
+
+    // ニトロパージ
+
+    if (
+        name === "ニトロ冷却噴射時カラー" ||
+        name === "ニトロパージコントロール"
+    ) {
+
+        return "ニトロパージ";
+    }
+
+
+    // 未登録
+
+    return "その他";
+}
+
+
+// ==========================================
+// オーダーシート解析
+// ==========================================
+
+function parseOrder(text) {
+
+    const result = [];
+
+
+    const regex =
+        /([^,\[\]]+?)\s*-\s*\[\s*([^\]]*?)\s*\](?:,|$)/g;
+
+
+    let match;
+
+
+    while (
+        (
+            match =
+                regex.exec(text)
+        ) !== null
+    ) {
+
+        const name =
+            match[1]
+                .trim();
+
+
+        const detail =
+            match[2]
+                .trim();
+
+
+        if (!name) {
+
+            continue;
+        }
+
+
+        result.push({
+
+            category:
+                getCategory(
+                    name,
+                    detail
+                ),
+
+            name,
+
+            detail
+        });
+    }
+
+
+    return result;
+}
+
+
+// ==========================================
+// SUMMARY
+// ==========================================
+
+function renderSummary(items) {
+
+    const counts = {};
+
+
+    items.forEach((item) => {
+
+        counts[
+            item.category
+        ] =
+            (
+                counts[
+                    item.category
+                ] || 0
+            ) + 1;
+    });
+
+
+    const sortedCategories =
+        Object.entries(counts)
+            .sort(
+                ([categoryA], [categoryB]) => {
+
+                    const orderA =
+                        categoryOrder[
+                            categoryA
+                        ] ?? 9999;
+
+
+                    const orderB =
+                        categoryOrder[
+                            categoryB
+                        ] ?? 9999;
+
+
+                    return (
+                        orderA -
+                        orderB
+                    );
+                }
+            );
+
+
+    let html = `
+
+        <table class="summary-table">
+
+            <thead>
+
+                <tr>
+
+                    <th>
+                        PARTS NAME
+                    </th>
+
+                    <th>
+                        QTY
+                    </th>
+
+                </tr>
+
+            </thead>
+
+            <tbody>
+
+    `;
+
+
+    sortedCategories.forEach(
+        ([category, qty]) => {
+
+            html += `
+
+                <tr>
+
+                    <td>
+                        ${category}
+                    </td>
+
+                    <td>
+
+                        <span class="qty-badge">
+                            ${qty}
+                        </span>
+
+                    </td>
+
+                </tr>
+
+            `;
+        }
+    );
+
+
+    html += `
+
+            </tbody>
+
+        </table>
+
+    `;
+
+
+    orderSummary.innerHTML =
+        html;
+}
+
+
+// ==========================================
+// DETAIL LIST
+// ==========================================
+
+function renderDetails(items) {
+
+    const sortedItems =
+        [...items].sort(
+            (a, b) => {
+
+                const categoryA =
+                    categoryOrder[
+                        a.category
+                    ] ?? 9999;
+
+
+                const categoryB =
+                    categoryOrder[
+                        b.category
+                    ] ?? 9999;
+
+
+                if (
+                    categoryA !==
+                    categoryB
+                ) {
+
+                    return (
+                        categoryA -
+                        categoryB
+                    );
+                }
+
+
+                const nameA =
+                    nameOrder[
+                        a.name
+                    ] ?? 9999;
+
+
+                const nameB =
+                    nameOrder[
+                        b.name
+                    ] ?? 9999;
+
+
+                return (
+                    nameA -
+                    nameB
+                );
+            }
+        );
+
+
+    let html = `
+
+        <table class="detail-table">
+
+            <thead>
+
+                <tr>
+
+                    <th>
+                        CATEGORY
+                    </th>
+
+                    <th>
+                        NAME
+                    </th>
+
+                    <th>
+                        DETAIL
+                    </th>
+
+                </tr>
+
+            </thead>
+
+            <tbody>
+
+    `;
+
+
+    sortedItems.forEach(
+        (item) => {
+
+            html += `
+
+                <tr>
+
+                    <td>
+                        ${item.category}
+                    </td>
+
+                    <td>
+                        ${item.name}
+                    </td>
+
+                    <td>
+                        ${item.detail}
+                    </td>
+
+                </tr>
+
+            `;
+        }
+    );
+
+
+    html += `
+
+            </tbody>
+
+        </table>
+
+    `;
+
+
+    orderResult.innerHTML =
+        html;
+}
+
+
+// ==========================================
+// 外装 / カラー自動カウント
+// ==========================================
+
+function updateCustomCounts(items) {
+
+    let exterior = 0;
+
+    let colors = 0;
+
+
+    items.forEach((item) => {
+
+        if (
+            item.category ===
+            "カラー"
+        ) {
+
+            colors++;
+
+        } else {
+
+            // その他も一旦10万円扱い
+
+            exterior++;
+        }
+    });
+
+
+    exteriorCount.value =
+        String(
+            Math.min(
+                exterior,
+                50
+            )
+        );
+
+
+    colorCount.value =
+        String(
+            Math.min(
+                colors,
+                20
+            )
+        );
+
+
+    calculateTotal();
+}
+
+
+// ==========================================
+// 保存状態を復元
+// ==========================================
+
+function restoreMechanicState() {
+
+    const saved =
+        localStorage.getItem(
+            MECHANIC_STORAGE_KEY
+        );
+
+
+    if (!saved) {
+
+        calculateTotal();
+
+        return;
+    }
+
+
+    try {
+
+        const state =
+            JSON.parse(saved);
+
+
+        // オーダーシート
+
+        if (
+            typeof state.orderInput ===
+            "string"
+        ) {
+
+            orderInput.value =
+                state.orderInput;
+        }
+
+
+        // 性能カスタム
+
+        if (
+            Array.isArray(
+                state.priceItems
+            )
+        ) {
+
+            priceItems.forEach(
+                (item, index) => {
+
+                    const savedItem =
+                        state.priceItems[index];
+
+
+                    if (
+                        savedItem
+                    ) {
+
+                        item.checked =
+                            Boolean(
+                                savedItem.checked
+                            );
+                    }
+                }
+            );
+        }
+
+
+        // 外装
+
+        if (
+            state.exteriorCount !==
+            undefined
+        ) {
+
+            exteriorCount.value =
+                String(
+                    state.exteriorCount
+                );
+        }
+
+
+        // カラー
+
+        if (
+            state.colorCount !==
+            undefined
+        ) {
+
+            colorCount.value =
+                String(
+                    state.colorCount
+                );
+        }
+
+
+        // 販売
+
+        if (
+            Array.isArray(
+                state.saleQuantities
+            )
+        ) {
+
+            saleQuantities.forEach(
+                (input, index) => {
+
+                    const savedInput =
+                        state.saleQuantities[index];
+
+
+                    if (
+                        savedInput
+                    ) {
+
+                        input.value =
+                            savedInput.value ?? "0";
+                    }
+                }
+            );
+        }
+
+
+        // SUMMARY / DETAIL LIST
+
+        const text =
+            orderInput.value
+                .trim();
+
+
+        if (text) {
+
+            const items =
+                parseOrder(text);
+
+
+            if (
+                items.length > 0
+            ) {
+
+                renderSummary(items);
+
+                renderDetails(items);
+            }
+        }
+
+
+        calculateTotal();
+
+    } catch (error) {
+
+        console.error(
+            "メカニック状態の復元に失敗しました。",
+            error
+        );
+
+
+        localStorage.removeItem(
+            MECHANIC_STORAGE_KEY
+        );
+
+
+        calculateTotal();
+    }
+}
+
+
+// ==========================================
+// 性能カスタム
+// ==========================================
+
+radioItems.forEach((radio) => {
+
+    let wasChecked = false;
+
+
+    radio.addEventListener(
+        "mousedown",
+        () => {
+
+            wasChecked =
+                radio.checked;
+        }
+    );
+
+
+    radio.addEventListener(
+        "click",
+        () => {
+
+            if (
+                wasChecked
+            ) {
+
+                radio.checked =
+                    false;
+            }
+
+
+            calculateTotal();
+
+            saveMechanicState();
+        }
+    );
+});
+
+
+// ==========================================
+// その他性能
+// ==========================================
+
+document
+    .querySelectorAll(
+        'input[type="checkbox"].price-item'
+    )
+    .forEach((item) => {
+
+        item.addEventListener(
+            "change",
+            () => {
+
+                calculateTotal();
+
+                saveMechanicState();
+            }
+        );
+    });
+
+
+// ==========================================
+// 外装
+// ==========================================
+
+exteriorCount.addEventListener(
+    "change",
+    () => {
+
+        calculateTotal();
+
+        saveMechanicState();
+    }
+);
+
+
+// ==========================================
+// カラー
+// ==========================================
+
+colorCount.addEventListener(
+    "change",
+    () => {
+
+        calculateTotal();
+
+        saveMechanicState();
+    }
+);
+
+
+// ==========================================
+// 販売
+// ==========================================
+
+saleQuantities.forEach((input) => {
+
+    input.addEventListener(
+        "input",
+        () => {
+
+            if (
+                Number(input.value) < 0
+            ) {
+
+                input.value = "0";
+            }
+
+
+            calculateTotal();
+
+            saveMechanicState();
+        }
+    );
+});
+
+
+// ==========================================
+// オーダーシート入力時も保存
+// ==========================================
+
+orderInput.addEventListener(
+    "input",
+    () => {
+
+        saveMechanicState();
+    }
+);
+
+
+// ==========================================
+// オーダー解析
+// ==========================================
+
+analyzeButton.addEventListener(
+    "click",
+    () => {
+
+        const text =
+            orderInput.value
+                .trim();
+
+
+        // 入力なし
+
+        if (!text) {
+
+            orderSummary.innerHTML =
+
+                '<p class="empty-message">' +
+                'オーダーシートが入力されていません。' +
+                '</p>';
+
+
+            orderResult.innerHTML =
+
+                '<p class="empty-message">' +
+                'オーダー内容がありません。' +
+                '</p>';
+
+
+            saveMechanicState();
+
+            return;
+        }
+
+
+        const items =
+            parseOrder(text);
+
+
+        // 解析失敗
+
+        if (
+            items.length === 0
+        ) {
+
+            orderSummary.innerHTML =
+
+                '<p class="empty-message">' +
+                '解析できる項目が見つかりませんでした。' +
+                '</p>';
+
+
+            orderResult.innerHTML =
+
+                '<p class="empty-message">' +
+                'オーダーシートの形式を確認してください。' +
+                '</p>';
+
+
+            saveMechanicState();
+
+            return;
+        }
+
+
+        renderSummary(items);
+
+        renderDetails(items);
+
+        updateCustomCounts(items);
+
+
+        // 解析結果・外装数・カラー数を保存
+
+        saveMechanicState();
+    }
+);
+
+
+// ==========================================
+// 合計金額コピー
+// ==========================================
+
+copyButton.addEventListener(
+    "click",
+    async () => {
+
+        try {
+
+            await navigator
+                .clipboard
+                .writeText(
+                    totalPrice
+                        .textContent
+                );
+
+
+            copyButton.textContent =
+                "コピーしました！";
+
+
+            setTimeout(
+                () => {
+
+                    copyButton.textContent =
+                        "コピー";
+
+                },
+                1000
+            );
+
+        } catch {
+
+            alert(
+                "コピーできませんでした。"
+            );
+        }
+    }
+);
+
+
+// ==========================================
+// リセット
+// ==========================================
+
+resetButton.addEventListener(
+    "click",
+    () => {
+
+
+        // 性能
+
+        priceItems.forEach(
+            (item) => {
+
+                item.checked =
+                    false;
+            }
+        );
+
+
+        // 外装 / カラー
+
+        exteriorCount.value =
+            "0";
+
+        colorCount.value =
+            "0";
+
+
+        // 販売
+
+        saleQuantities.forEach(
+            (input) => {
+
+                input.value =
+                    "0";
+            }
+        );
+
+
+        // オーダーシート
+
+        orderInput.value =
+            "";
+
+
+        // SUMMARY
+
+        orderSummary.innerHTML =
+
+            '<p class="empty-message">' +
+            'オーダーを解析すると、ここに集計結果が表示されます' +
+            '</p>';
+
+
+        // DETAIL LIST
+
+        orderResult.innerHTML =
+
+            '<p class="empty-message">' +
+            'オーダー内容がここに一覧表示されます' +
+            '</p>';
+
+
+        // 金額
+
+        calculateTotal();
+
+
+        // 保存内容を削除
+
+        localStorage.removeItem(
+            MECHANIC_STORAGE_KEY
+        );
+    }
+);
+
+
+// ==========================================
+// ダークモード
+// ==========================================
+
+themeButton.addEventListener(
+    "click",
+    () => {
+
+        document.body
+            .classList
+            .toggle("dark");
+
+
+        const dark =
+            document.body
+                .classList
+                .contains("dark");
+
+
+        themeButton.textContent =
+            dark
+                ? "☀️ 通常モード"
+                : "🌙 ダークモード";
+
+
+        localStorage.setItem(
+            "theme",
+            dark
+                ? "dark"
+                : "light"
+        );
+    }
+);
+
+
+// ==========================================
+// 前回使ったテーマを復元
+// ==========================================
+
+if (
+    localStorage.getItem(
+        "theme"
+    ) === "dark"
+) {
+
+    document.body
+        .classList
+        .add("dark");
+
+
+    themeButton.textContent =
+        "☀️ 通常モード";
+}
+
+
+// ==========================================
+// メカニックの前回状態を復元
+// ==========================================
+
+restoreMechanicState();

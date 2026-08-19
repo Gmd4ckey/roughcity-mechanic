@@ -1,0 +1,824 @@
+* {
+    box-sizing: border-box;
+}
+
+
+:root {
+    --bg: #eef1f4;
+    --card: #ffffff;
+    --text: #1f1f1f;
+    --subtext: #68707a;
+    --border: #d9dde2;
+    --button: #2c2c2c;
+    --button-text: #ffffff;
+    --input-bg: #ffffff;
+}
+
+
+body.dark {
+    --bg: #111315;
+    --card: #1b1e21;
+    --text: #f3f3f3;
+    --subtext: #aab0b8;
+    --border: #34383d;
+    --button: #f2f2f2;
+    --button-text: #111111;
+    --input-bg: #151719;
+}
+
+
+body {
+    margin: 0;
+
+    font-family:
+        "Segoe UI",
+        "Yu Gothic",
+        "Meiryo",
+        sans-serif;
+
+    background: var(--bg);
+    color: var(--text);
+}
+
+
+header {
+    height: 58px;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    padding: 0 22px;
+
+    background: var(--card);
+
+    border-bottom:
+        1px solid var(--border);
+}
+
+
+header h1 {
+    margin: 0;
+    font-size: 22px;
+}
+
+
+main {
+    width: 98%;
+
+    margin:
+        12px auto
+        30px;
+
+    display: grid;
+    gap: 12px;
+}
+
+
+section {
+    background: var(--card);
+
+    border:
+        1px solid var(--border);
+
+    border-radius: 10px;
+
+    padding: 14px;
+}
+
+
+h2 {
+    margin: 0 0 12px;
+    font-size: 18px;
+}
+
+
+/* =========================
+   合計
+========================= */
+
+.top-bar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+
+.total-area {
+    display: flex;
+    align-items: center;
+    gap: 18px;
+}
+
+
+.total-title {
+    font-size: 18px;
+    font-weight: 700;
+}
+
+
+#totalPrice {
+    font-size: 34px;
+    font-weight: 800;
+}
+
+
+.top-buttons {
+    display: flex;
+    gap: 8px;
+}
+
+
+/* =========================
+   ボタン
+========================= */
+
+button {
+    border: none;
+    border-radius: 7px;
+
+    padding: 9px 16px;
+
+    background: var(--button);
+    color: var(--button-text);
+
+    font-weight: 700;
+
+    cursor: pointer;
+}
+
+
+button:hover {
+    opacity: 0.85;
+}
+
+
+/* =========================
+   オーダー
+========================= */
+
+textarea {
+    width: 100%;
+    min-height: 110px;
+
+    padding: 10px;
+
+    resize: vertical;
+
+    border:
+        1px solid var(--border);
+
+    border-radius: 7px;
+
+    background: var(--input-bg);
+    color: var(--text);
+
+    font-size: 13px;
+}
+
+
+#analyzeButton {
+    margin-top: 8px;
+}
+
+
+.empty-message {
+    margin: 0;
+    color: var(--subtext);
+}
+
+
+/* =========================
+   SUMMARY
+========================= */
+
+.summary-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+
+.summary-table th,
+.summary-table td {
+    padding: 9px 8px;
+
+    border-bottom:
+        1px solid var(--border);
+
+    text-align: left;
+}
+
+
+.summary-table th {
+    font-size: 12px;
+    color: var(--subtext);
+}
+
+
+.summary-table th:last-child,
+.summary-table td:last-child {
+    text-align: right;
+}
+
+
+.qty-badge {
+    display: inline-block;
+
+    min-width: 28px;
+
+    padding: 2px 8px;
+
+    border-radius: 999px;
+
+    background: var(--text);
+    color: var(--card);
+
+    text-align: center;
+
+    font-weight: 700;
+}
+
+
+/* =========================
+   DETAIL LIST
+========================= */
+
+.detail-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+
+.detail-table th,
+.detail-table td {
+    padding: 9px 8px;
+
+    border-bottom:
+        1px solid var(--border);
+
+    text-align: left;
+    vertical-align: top;
+}
+
+
+.detail-table th {
+    font-size: 12px;
+    color: var(--subtext);
+}
+
+
+.detail-table td:nth-child(1) {
+    width: 22%;
+    font-weight: 700;
+}
+
+
+.detail-table td:nth-child(2) {
+    width: 26%;
+    font-weight: 700;
+}
+
+
+.detail-table td:nth-child(3) {
+    width: 52%;
+    color: var(--subtext);
+}
+
+
+/* =========================
+   性能
+========================= */
+
+.performance-grid {
+    display: grid;
+
+    grid-template-columns:
+        1fr 1fr;
+
+    gap: 10px;
+}
+
+
+.performance-column {
+    display: grid;
+    gap: 7px;
+}
+
+
+.performance-row {
+    display: grid;
+
+    grid-template-columns:
+        150px
+        repeat(
+            5,
+            minmax(48px, 1fr)
+        );
+
+    align-items: center;
+
+    min-height: 42px;
+
+    padding: 6px 8px;
+
+    border:
+        1px solid var(--border);
+
+    border-radius: 7px;
+
+    background: var(--input-bg);
+}
+
+
+.part-name {
+    font-size: 13px;
+    font-weight: 700;
+}
+
+
+.performance-row label {
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    gap: 4px;
+
+    padding: 5px;
+
+    font-size: 12px;
+
+    cursor: pointer;
+}
+
+
+.performance-row input[type="radio"] {
+    appearance: none;
+
+    width: 15px;
+    height: 15px;
+
+    margin: 0;
+
+    border: 1px solid #888;
+
+    border-radius: 3px;
+}
+
+
+.performance-row input[type="radio"]:checked {
+    background: var(--text);
+
+    box-shadow:
+        inset 0 0 0 3px
+        var(--input-bg);
+}
+
+
+.performance-row label:has(input:checked) {
+    background: var(--text);
+    color: var(--card);
+
+    border-radius: 6px;
+
+    font-weight: 700;
+}
+
+
+/* =========================
+   その他性能
+========================= */
+
+.extra-parts {
+    display: grid;
+
+    grid-template-columns:
+        repeat(4, 1fr);
+
+    gap: 7px;
+
+    margin-top: 10px;
+}
+
+
+.extra-parts label {
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    gap: 6px;
+
+    min-height: 40px;
+
+    padding: 6px;
+
+    border:
+        1px solid var(--border);
+
+    border-radius: 7px;
+
+    background: var(--input-bg);
+
+    font-size: 12px;
+    font-weight: 600;
+
+    cursor: pointer;
+}
+
+
+.extra-parts label:has(input:checked) {
+    background: var(--text);
+    color: var(--card);
+}
+
+
+/* =========================
+   外装
+========================= */
+
+.custom-count-row {
+    display: flex;
+
+    align-items: center;
+    justify-content: space-between;
+
+    padding: 12px 4px;
+
+    border-bottom:
+        1px solid var(--border);
+}
+
+
+.custom-count-row p {
+    margin: 3px 0 0;
+
+    color: var(--subtext);
+
+    font-size: 12px;
+}
+
+
+select {
+    min-width: 150px;
+
+    padding: 9px 12px;
+
+    border:
+        1px solid var(--border);
+
+    border-radius: 7px;
+
+    background: var(--input-bg);
+    color: var(--text);
+}
+
+
+/* =========================
+   販売
+========================= */
+
+.sales-section {
+    width: 100%;
+}
+
+
+.sales-grid {
+    display: grid;
+
+    grid-template-columns:
+        repeat(3, 1fr);
+
+    gap: 10px;
+}
+
+
+.sales-item {
+    display: flex;
+
+    align-items: center;
+    justify-content: space-between;
+
+    gap: 12px;
+
+    padding: 12px;
+
+    border:
+        1px solid var(--border);
+
+    border-radius: 8px;
+
+    background: var(--input-bg);
+}
+
+
+.sales-info {
+    display: flex;
+    flex-direction: column;
+
+    gap: 3px;
+}
+
+
+.sales-info span {
+    color: var(--subtext);
+
+    font-size: 12px;
+}
+
+
+.sale-quantity {
+    width: 90px;
+
+    padding: 9px 8px;
+
+    border:
+        1px solid var(--border);
+
+    border-radius: 7px;
+
+    background: var(--input-bg);
+    color: var(--text);
+
+    text-align: center;
+
+    font-size: 15px;
+}
+
+
+/* =========================
+   半画面
+========================= */
+
+.dashboard-layout {
+    display: flex;
+    flex-direction: column;
+
+    gap: 12px;
+}
+
+
+/* =========================
+   全画面
+========================= */
+
+@media (min-width: 1400px) {
+
+    .dashboard-layout {
+        display: grid;
+
+        grid-template-columns:
+            minmax(0, 1fr)
+            minmax(0, 1fr);
+
+        gap: 12px;
+
+        align-items: start;
+    }
+
+
+    /* 左列 */
+    .summary-section {
+        grid-column: 1;
+        grid-row: 1;
+    }
+
+
+    .detail-section {
+        grid-column: 1;
+        grid-row: 2;
+
+        align-self: start;
+    }
+
+
+    /* 右列 */
+    .performance-section {
+        grid-column: 2;
+        grid-row: 1;
+    }
+
+
+    .custom-section {
+        grid-column: 2;
+        grid-row: 2;
+
+        align-self: start;
+    }
+
+
+    /* SUMMARYを3列表示 */
+
+    .summary-table thead {
+        display: none;
+    }
+
+
+    .summary-table,
+    .summary-table tbody {
+        display: block;
+        width: 100%;
+    }
+
+
+    .summary-table tbody {
+        display: grid;
+
+        grid-template-columns:
+            repeat(3, minmax(0, 1fr));
+
+        gap: 8px 10px;
+    }
+
+
+    .summary-table tr {
+        display: flex;
+
+        align-items: center;
+        justify-content: space-between;
+
+        gap: 10px;
+
+        min-height: 42px;
+
+        padding: 8px 10px;
+
+        border:
+            1px solid var(--border);
+
+        border-radius: 7px;
+
+        background: var(--input-bg);
+    }
+
+
+    .summary-table td {
+        padding: 0;
+        border: none;
+    }
+
+
+    .summary-table td:first-child {
+        font-weight: 700;
+    }
+
+
+    .summary-table td:last-child {
+        margin-left: auto;
+    }
+
+}
+
+
+/* =========================
+   半画面
+========================= */
+
+@media (max-width: 1100px) {
+
+    .performance-grid {
+        grid-template-columns: 1fr;
+    }
+
+
+    .extra-parts {
+        grid-template-columns:
+            repeat(2, 1fr);
+    }
+
+
+    .sales-grid {
+        grid-template-columns:
+            1fr 1fr;
+    }
+
+}
+
+
+/* =========================
+   狭い画面
+========================= */
+
+@media (max-width: 650px) {
+
+    header {
+        padding: 10px;
+    }
+
+
+    header h1 {
+        font-size: 17px;
+    }
+
+
+    #totalPrice {
+        font-size: 26px;
+    }
+
+
+    .performance-row {
+        grid-template-columns:
+            120px
+            repeat(
+                5,
+                minmax(40px, 1fr)
+            );
+    }
+
+
+    .sales-grid {
+        grid-template-columns: 1fr;
+    }
+
+}/* =========================
+   ヘッダーナビ
+========================= */
+
+.header-buttons {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+
+.nav-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    padding: 9px 14px;
+
+    border: 1px solid var(--border);
+    border-radius: 8px;
+
+    background: var(--button);
+    color: var(--button-text);
+
+    font-size: 13px;
+    font-weight: 700;
+
+    text-decoration: none;
+
+    white-space: nowrap;
+
+    cursor: pointer;
+}
+
+
+.nav-button:hover {
+    opacity: 0.85;
+}
+
+
+/* =========================
+   半画面
+========================= */
+
+@media (max-width: 900px) {
+
+    header {
+        height: auto;
+
+        display: flex;
+        flex-direction: column;
+        align-items: stretch;
+
+        gap: 10px;
+
+        padding: 12px 14px;
+    }
+
+
+    header h1 {
+        width: 100%;
+
+        font-size: 20px;
+
+        white-space: nowrap;
+    }
+
+
+    .header-buttons {
+        width: 100%;
+
+        display: grid;
+        grid-template-columns: 1fr auto;
+
+        gap: 8px;
+    }
+
+
+    .nav-button {
+        min-width: 0;
+
+        padding: 9px 10px;
+
+        font-size: 12px;
+    }
+
+
+    #themeButton {
+        white-space: nowrap;
+    }
+
+}

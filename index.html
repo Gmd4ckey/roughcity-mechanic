@@ -1,0 +1,671 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>ラフシティメカニック</title>
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+<header>
+
+    <h1>ラフシティメカニック</h1>
+
+    <div class="header-buttons">
+
+        <a href="colors.html" class="nav-button">
+            🎨 ギャング・半グレカラー
+        </a>
+
+        <button id="themeButton">
+            🌙 ダークモード
+        </button>
+
+    </div>
+
+</header>
+
+
+<main>
+
+    <!-- 請求合計 -->
+
+    <section class="top-bar">
+
+        <div class="total-area">
+
+            <span class="total-title">
+                請求合計額
+            </span>
+
+            <strong id="totalPrice">
+                ¥0
+            </strong>
+
+        </div>
+
+
+        <div class="top-buttons">
+
+            <button id="copyButton">
+                コピー
+            </button>
+
+            <button id="resetButton">
+                リセット
+            </button>
+
+        </div>
+
+    </section>
+
+
+    <!-- オーダーシート -->
+
+    <section class="order-input-section">
+
+        <h2>オーダーシート</h2>
+
+        <textarea
+            id="orderInput"
+            placeholder="ここにオーダーシートを貼り付け"
+        ></textarea>
+
+        <button id="analyzeButton">
+            オーダーを解析
+        </button>
+
+    </section>
+
+
+    <!-- メイン -->
+
+    <div class="dashboard-layout">
+
+
+        <!-- SUMMARY -->
+
+        <section class="summary-section">
+
+            <h2>SUMMARY</h2>
+
+            <div id="orderSummary">
+
+                <p class="empty-message">
+                    オーダーを解析すると、ここに集計結果が表示されます
+                </p>
+
+            </div>
+
+        </section>
+
+
+        <!-- DETAIL LIST -->
+
+        <section class="detail-section">
+
+            <h2>DETAIL LIST</h2>
+
+            <div id="orderResult">
+
+                <p class="empty-message">
+                    オーダー内容がここに一覧表示されます
+                </p>
+
+            </div>
+
+        </section>
+
+
+        <!-- 性能カスタム -->
+
+        <section class="performance-section">
+
+            <h2>性能カスタム</h2>
+
+            <div class="performance-grid">
+
+                <!-- 左側 -->
+
+                <div class="performance-column">
+
+                    <div class="performance-row">
+
+                        <span class="part-name">
+                            エンジン
+                        </span>
+
+                        <label>
+                            <input type="radio" name="engine" class="price-item" data-price="500000">
+                            Lv1
+                        </label>
+
+                        <label>
+                            <input type="radio" name="engine" class="price-item" data-price="600000">
+                            Lv2
+                        </label>
+
+                        <label>
+                            <input type="radio" name="engine" class="price-item" data-price="750000">
+                            Lv3
+                        </label>
+
+                        <label>
+                            <input type="radio" name="engine" class="price-item" data-price="900000">
+                            Lv4
+                        </label>
+
+                        <label>
+                            <input type="radio" name="engine" class="price-item" data-price="1000000">
+                            Lv5
+                        </label>
+
+                    </div>
+
+
+                    <div class="performance-row">
+
+                        <span class="part-name">
+                            トランスミッション
+                        </span>
+
+                        <label>
+                            <input type="radio" name="transmission" class="price-item" data-price="500000">
+                            Lv1
+                        </label>
+
+                        <label>
+                            <input type="radio" name="transmission" class="price-item" data-price="600000">
+                            Lv2
+                        </label>
+
+                        <label>
+                            <input type="radio" name="transmission" class="price-item" data-price="750000">
+                            Lv3
+                        </label>
+
+                        <label>
+                            <input type="radio" name="transmission" class="price-item" data-price="900000">
+                            Lv4
+                        </label>
+
+                    </div>
+
+
+                    <div class="performance-row">
+
+                        <span class="part-name">
+                            ブレーキ
+                        </span>
+
+                        <label>
+                            <input type="radio" name="brake" class="price-item" data-price="500000">
+                            Lv1
+                        </label>
+
+                        <label>
+                            <input type="radio" name="brake" class="price-item" data-price="600000">
+                            Lv2
+                        </label>
+
+                        <label>
+                            <input type="radio" name="brake" class="price-item" data-price="750000">
+                            Lv3
+                        </label>
+
+                        <label>
+                            <input type="radio" name="brake" class="price-item" data-price="900000">
+                            Lv4
+                        </label>
+
+                    </div>
+
+
+                    <div class="performance-row">
+
+                        <span class="part-name">
+                            サスペンション
+                        </span>
+
+                        <label>
+                            <input type="radio" name="suspension" class="price-item" data-price="500000">
+                            Lv1
+                        </label>
+
+                        <label>
+                            <input type="radio" name="suspension" class="price-item" data-price="600000">
+                            Lv2
+                        </label>
+
+                        <label>
+                            <input type="radio" name="suspension" class="price-item" data-price="750000">
+                            Lv3
+                        </label>
+
+                        <label>
+                            <input type="radio" name="suspension" class="price-item" data-price="900000">
+                            Lv4
+                        </label>
+
+                        <label>
+                            <input type="radio" name="suspension" class="price-item" data-price="1000000">
+                            Lv5
+                        </label>
+
+                    </div>
+
+                </div>
+
+
+                <!-- 右側 -->
+
+                <div class="performance-column">
+
+                    <div class="performance-row">
+
+                        <span class="part-name">
+                            オイルポンプ
+                        </span>
+
+                        <label>
+                            <input type="radio" name="oilpump" class="price-item" data-price="500000">
+                            Lv1
+                        </label>
+
+                        <label>
+                            <input type="radio" name="oilpump" class="price-item" data-price="600000">
+                            Lv2
+                        </label>
+
+                        <label>
+                            <input type="radio" name="oilpump" class="price-item" data-price="750000">
+                            Lv3
+                        </label>
+
+                    </div>
+
+
+                    <div class="performance-row">
+
+                        <span class="part-name">
+                            ドライブシャフト
+                        </span>
+
+                        <label>
+                            <input type="radio" name="driveshaft" class="price-item" data-price="500000">
+                            Lv1
+                        </label>
+
+                        <label>
+                            <input type="radio" name="driveshaft" class="price-item" data-price="600000">
+                            Lv2
+                        </label>
+
+                        <label>
+                            <input type="radio" name="driveshaft" class="price-item" data-price="750000">
+                            Lv3
+                        </label>
+
+                    </div>
+
+
+                    <div class="performance-row">
+
+                        <span class="part-name">
+                            シリンダーヘッド
+                        </span>
+
+                        <label>
+                            <input type="radio" name="cylinder" class="price-item" data-price="500000">
+                            Lv1
+                        </label>
+
+                        <label>
+                            <input type="radio" name="cylinder" class="price-item" data-price="600000">
+                            Lv2
+                        </label>
+
+                        <label>
+                            <input type="radio" name="cylinder" class="price-item" data-price="750000">
+                            Lv3
+                        </label>
+
+                    </div>
+
+
+                    <div class="performance-row">
+
+                        <span class="part-name">
+                            バッテリーケーブル
+                        </span>
+
+                        <label>
+                            <input type="radio" name="battery" class="price-item" data-price="500000">
+                            Lv1
+                        </label>
+
+                        <label>
+                            <input type="radio" name="battery" class="price-item" data-price="600000">
+                            Lv2
+                        </label>
+
+                        <label>
+                            <input type="radio" name="battery" class="price-item" data-price="750000">
+                            Lv3
+                        </label>
+
+                    </div>
+
+
+                    <div class="performance-row">
+
+                        <span class="part-name">
+                            燃料タンク
+                        </span>
+
+                        <label>
+                            <input type="radio" name="fuel" class="price-item" data-price="500000">
+                            Lv1
+                        </label>
+
+                        <label>
+                            <input type="radio" name="fuel" class="price-item" data-price="600000">
+                            Lv2
+                        </label>
+
+                        <label>
+                            <input type="radio" name="fuel" class="price-item" data-price="750000">
+                            Lv3
+                        </label>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- その他性能 -->
+
+            <div class="extra-parts">
+
+                <label>
+                    <input type="checkbox" class="price-item" data-price="18000000">
+                    アーマー
+                </label>
+
+                <label>
+                    <input type="checkbox" class="price-item" data-price="3000000">
+                    ターボ
+                </label>
+
+                <label>
+                    <input type="checkbox" class="price-item" data-price="2500000">
+                    ニトロ新規
+                </label>
+
+                <label>
+                    <input type="checkbox" class="price-item" data-price="1200000">
+                    ニトロ交換
+                </label>
+
+                <label>
+                    <input type="checkbox" class="price-item" data-price="3000000">
+                    ハーネス
+                </label>
+
+                <label>
+                    <input type="checkbox" class="price-item" data-price="3000000">
+                    アンチラグ
+                </label>
+
+                <label>
+                    <input type="checkbox" class="price-item" data-price="1000000">
+                    ドリフトタイヤ
+                </label>
+
+                <label>
+                    <input type="checkbox" class="price-item" data-price="1000000">
+                    マニュアルギア
+                </label>
+
+            </div>
+
+        </section>
+
+
+        <!-- 外装・カラー -->
+
+        <section class="custom-section">
+
+            <h2>外装カスタム</h2>
+
+
+            <div class="custom-count-row">
+
+                <div>
+
+                    <strong>
+                        外装カスタム
+                    </strong>
+
+                    <p>
+                        1か所 ¥100,000
+                    </p>
+
+                </div>
+
+
+                <select id="exteriorCount"></select>
+
+            </div>
+
+
+            <div class="custom-count-row">
+
+                <div>
+
+                    <strong>
+                        カラー
+                    </strong>
+
+                    <p>
+                        1か所 ¥50,000
+                    </p>
+
+                </div>
+
+
+                <select id="colorCount"></select>
+
+            </div>
+
+        </section>
+
+    </div>
+
+
+    <!-- =====================================
+         販売
+    ====================================== -->
+
+    <section class="sales-section">
+
+        <h2>販売</h2>
+
+
+        <div class="sales-grid">
+
+
+            <div class="sales-item">
+
+                <div class="sales-info">
+
+                    <strong>
+                        クリーニングキット
+                    </strong>
+
+                    <span>
+                        ¥100,000
+                    </span>
+
+                </div>
+
+                <input
+                    type="number"
+                    class="sale-quantity"
+                    data-price="100000"
+                    min="0"
+                    step="1"
+                    value="0"
+                >
+
+            </div>
+
+
+            <div class="sales-item">
+
+                <div class="sales-info">
+
+                    <strong>
+                        ネオンコントローラー
+                    </strong>
+
+                    <span>
+                        ¥200,000
+                    </span>
+
+                </div>
+
+                <input
+                    type="number"
+                    class="sale-quantity"
+                    data-price="200000"
+                    min="0"
+                    step="1"
+                    value="0"
+                >
+
+            </div>
+
+
+            <div class="sales-item">
+
+                <div class="sales-info">
+
+                    <strong>
+                        ダクトテープ
+                    </strong>
+
+                    <span>
+                        ¥200,000
+                    </span>
+
+                </div>
+
+                <input
+                    type="number"
+                    class="sale-quantity"
+                    data-price="200000"
+                    min="0"
+                    step="1"
+                    value="0"
+                >
+
+            </div>
+
+
+            <div class="sales-item">
+
+                <div class="sales-info">
+
+                    <strong>
+                        車両塗装缶
+                    </strong>
+
+                    <span>
+                        ¥150,000
+                    </span>
+
+                </div>
+
+                <input
+                    type="number"
+                    class="sale-quantity"
+                    data-price="150000"
+                    min="0"
+                    step="1"
+                    value="0"
+                >
+
+            </div>
+
+
+            <div class="sales-item">
+
+                <div class="sales-info">
+
+                    <strong>
+                        ニトロ缶
+                    </strong>
+
+                    <span>
+                        ¥2,500,000
+                    </span>
+
+                </div>
+
+                <input
+                    type="number"
+                    class="sale-quantity"
+                    data-price="2500000"
+                    min="0"
+                    step="1"
+                    value="0"
+                >
+
+            </div>
+
+
+            <div class="sales-item">
+
+                <div class="sales-info">
+
+                    <strong>
+                        ニトロ補充
+                    </strong>
+
+                    <span>
+                        ¥1,200,000
+                    </span>
+
+                </div>
+
+                <input
+                    type="number"
+                    class="sale-quantity"
+                    data-price="1200000"
+                    min="0"
+                    step="1"
+                    value="0"
+                >
+
+            </div>
+
+        </div>
+
+    </section>
+
+</main>
+
+
+<script src="script.js"></script>
+
+</body>
+
+</html>
