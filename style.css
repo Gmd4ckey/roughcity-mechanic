@@ -821,4 +821,76 @@ select {
         white-space: nowrap;
     }
 
+}/* =========================
+   修理
+========================= */
+
+.repair-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 10px;
+}
+
+
+.repair-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    gap: 12px;
+
+    padding: 12px;
+
+    border: 1px solid var(--border);
+    border-radius: 8px;
+
+    background: var(--input-bg);
+}
+
+
+.repair-info {
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+}
+
+
+.repair-info span {
+    color: var(--subtext);
+    font-size: 12px;
+}
+
+
+.repair-quantity {
+    width: 90px;
+
+    padding: 9px 8px;
+
+    border: 1px solid var(--border);
+    border-radius: 7px;
+
+    background: var(--input-bg);
+    color: var(--text);
+
+    text-align: center;
+
+    font-size: 15px;
+}
+
+
+@media (max-width: 1100px) {
+
+    .repair-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+}
+
+
+@media (max-width: 650px) {
+
+    .repair-grid {
+        grid-template-columns: 1fr;
+    }
+
 }

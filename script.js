@@ -51,7 +51,8 @@ const radioItems =
 
 const saleQuantities =
     document.querySelectorAll(".sale-quantity");
-
+const repairQuantities =
+    document.querySelectorAll(".repair-quantity");
 
 // ==========================================
 // localStorage
@@ -341,7 +342,27 @@ function calculateTotal() {
 
     let total = 0;
 
+// --------------------------------------
+// 修理
+// --------------------------------------
 
+repairQuantities.forEach((input) => {
+
+    const quantity =
+        Math.max(
+            0,
+            Number(input.value) || 0
+        );
+
+    const price =
+        Number(
+            input.dataset.price
+        );
+
+    total +=
+        quantity * price;
+
+});
     // 性能カスタム
 
     priceItems.forEach((item) => {
@@ -400,7 +421,32 @@ function calculateTotal() {
         "¥" +
         total.toLocaleString("ja-JP");
 }
+// ==========================================
+// 修理
+// ==========================================
 
+repairQuantities.forEach((input) => {
+
+    input.addEventListener(
+        "input",
+        () => {
+
+            if (
+                Number(input.value) < 0
+            ) {
+
+                input.value = "0";
+
+            }
+
+            calculateTotal();
+
+            saveMechanicState();
+
+        }
+    );
+
+});
 
 // ==========================================
 // 状態保存
@@ -432,6 +478,17 @@ function saveMechanicState() {
 
         saleQuantities:
             Array.from(saleQuantities).map(
+                (input) => {
+
+                    return {
+                        value:
+                            input.value
+                    };
+                }
+            ),
+
+        repairQuantities:
+            Array.from(repairQuantities).map(
                 (input) => {
 
                     return {
@@ -1257,7 +1314,30 @@ function restoreMechanicState() {
                 }
             );
         }
+// 修理
 
+if (
+    Array.isArray(
+        state.repairQuantities
+    )
+) {
+
+    repairQuantities.forEach(
+        (input, index) => {
+
+            const savedInput =
+                state.repairQuantities[index];
+
+            if (
+                savedInput
+            ) {
+
+                input.value =
+                    savedInput.value ?? "0";
+            }
+        }
+    );
+}
 
         // SUMMARY / DETAIL LIST
 
@@ -1595,7 +1675,15 @@ resetButton.addEventListener(
                     "0";
             }
         );
+        // 修理
 
+        repairQuantities.forEach(
+            (input) => {
+
+                input.value =
+                    "0";
+            }
+        );
 
         // オーダーシート
 
