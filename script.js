@@ -144,6 +144,8 @@ const categoryOrder = {
 
     "ニトロパージ": 200,
 
+    "エクストラ": 210,
+
     // 未登録は必ず最後
     "その他": 9999
 };
@@ -737,7 +739,16 @@ const exteriorNames = [
 
     "エクストラパーツ"
 ];
+// ======================================
+// エクストラ
+// ======================================
 
+if (
+    name === "エクストラ"
+) {
+
+    return "エクストラ";
+}
     if (
         exteriorNames.includes(name)
     ) {
@@ -1026,52 +1037,26 @@ function renderSummary(items) {
 
 function renderDetails(items) {
 
-    const sortedItems =
-        [...items].sort(
-            (a, b) => {
+const sortedItems =
+    [...items].sort(
+        (a, b) => {
 
-                const categoryA =
-                    categoryOrder[
-                        a.category
-                    ] ?? 9999;
+            const nameA =
+                nameOrder[
+                    a.name
+                ] ?? 9999;
 
+            const nameB =
+                nameOrder[
+                    b.name
+                ] ?? 9999;
 
-                const categoryB =
-                    categoryOrder[
-                        b.category
-                    ] ?? 9999;
-
-
-                if (
-                    categoryA !==
-                    categoryB
-                ) {
-
-                    return (
-                        categoryA -
-                        categoryB
-                    );
-                }
-
-
-                const nameA =
-                    nameOrder[
-                        a.name
-                    ] ?? 9999;
-
-
-                const nameB =
-                    nameOrder[
-                        b.name
-                    ] ?? 9999;
-
-
-                return (
-                    nameA -
-                    nameB
-                );
-            }
-        );
+            return (
+                nameA -
+                nameB
+            );
+        }
+    );
 
 
     let html = `
