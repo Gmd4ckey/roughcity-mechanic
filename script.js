@@ -1590,12 +1590,14 @@ copyButton.addEventListener(
 
         try {
 
-            await navigator
-                .clipboard
-                .writeText(
-                    totalPrice
-                        .textContent
-                );
+await navigator
+    .clipboard
+    .writeText(
+        totalPrice
+            .textContent
+            .replace(/[¥￥,]/g, "")
+            .trim()
+    );
 
 
             copyButton.textContent =
