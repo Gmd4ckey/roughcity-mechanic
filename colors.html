@@ -564,6 +564,18 @@ main {
 
     </section>
 
+<section class="color-section">
+
+    <h2 class="section-title">
+        退役軍人カラー
+    </h2>
+
+    <div
+        class="team-grid"
+        id="veteranGrid"
+    ></div>
+
+</section>
 
     <!-- ==============================
          個人医
@@ -758,25 +770,6 @@ const colorData = {
         },
 
 
-        {
-            name: "黄色【Honey Crow】",
-            cardColor: "#f2d900",
-
-            colors: [
-
-                {
-                    label: "メイン・サブ",
-                    name: "レースイエロー【メタリック】"
-                },
-
-                {
-                    label: "パール",
-                    name: "レースイエロー【カメレオン】"
-                }
-
-            ]
-        },
-
 
         {
             name: "紫【Velvet Iris】",
@@ -862,7 +855,19 @@ const colorData = {
         }
 
     ],
+veteran: [
+    {
+        name: "紫【EVA】",
+        cardColor: "#6200FF",
 
+        colors: [
+            {
+                label: "メイン・サブ",
+                rgb: [98, 0, 255]
+            }
+        ]
+    }
+],
 
     doctor: [
 
@@ -1359,6 +1364,12 @@ renderGroup(
 renderGroup(
     colorData.hangure,
     "hangureGrid"
+);
+
+
+renderGroup(
+    colorData.veteran,
+    "veteranGrid"
 );
 
 
