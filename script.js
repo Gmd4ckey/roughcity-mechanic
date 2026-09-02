@@ -14,8 +14,14 @@ const totalPrice =
 const copyButton =
     document.getElementById("copyButton");
 
+const completePaymentButton =
+    document.getElementById("completePaymentButton");
+
 const resetButton =
     document.getElementById("resetButton");
+
+    const HISTORY_STORAGE_KEY = "mechanicPaymentHistory";
+const MAX_HISTORY_COUNT = 30;
 
 const themeButton =
     document.getElementById("themeButton");
@@ -1581,6 +1587,138 @@ analyzeButton.addEventListener(
     }
 );
 
+// ==========================================
+// 会計履歴
+// ==========================================
+
+function getPaymentHistory() {
+
+    try {
+
+        const saved =
+            localStorage.getItem(
+                HISTORY_STORAGE_KEY
+            );
+
+        if (!saved) {
+            return [];
+        }
+
+        return JSON.parse(saved);
+
+    } catch (error) {
+
+        console.error(
+            "会計履歴の読み込みに失敗しました。",
+            error
+        );
+
+        return [];
+    }
+}
+
+
+function savePaymentHistory(history) {
+
+    localStorage.setItem(
+        HISTORY_STORAGE_KEY,
+        JSON.stringify(history)
+    );
+}
+
+
+completePaymentButton.addEventListener(
+    "click",
+    () => {
+
+        // 画面表示は ¥1,250,000 のまま
+        // 保存する金額は 1250000 にする
+
+        const amount =
+            Number(
+                totalPrice
+                    .textContent
+                    .replace(/[¥￥,]/g, "")
+                    .trim()
+            ) || 0;
+
+
+        // 0円の会計は保存しない
+
+        if (amount <= 0) {
+
+            alert(
+                "合計金額が0円です。"
+            );
+
+            return;
+        }
+
+
+        const now =
+            new Date();
+
+
+        const historyItem = {
+
+            id:
+                Date.now(),
+
+            date:
+                now.toLocaleString(
+                    "ja-JP"
+                ),
+
+            amount:
+                amount
+
+        };
+
+
+        const history =
+            getPaymentHistory();
+
+
+        // 最新を一番上に追加
+
+        history.unshift(
+            historyItem
+        );
+
+
+        // 最大30件
+
+        if (
+            history.length >
+            MAX_HISTORY_COUNT
+        ) {
+
+            history.length =
+                MAX_HISTORY_COUNT;
+        }
+
+
+        savePaymentHistory(
+            history
+        );
+
+
+        completePaymentButton.textContent =
+            "保存しました！";
+
+
+        setTimeout(
+            () => {
+
+                completePaymentButton.textContent =
+                    "会計完了";
+
+            },
+            1000
+        );
+
+    }
+);
 
 // ==========================================
 // 合計金額コピー

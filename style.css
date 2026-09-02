@@ -702,7 +702,8 @@ select {
 @media (max-width: 650px) {
 
     header {
-        padding: 10px;
+padding: 10px 16px;
+font-size: 14px;
     }
 
 
@@ -746,7 +747,8 @@ select {
     align-items: center;
     justify-content: center;
 
-    padding: 9px 14px;
+padding: 10px 16px;
+font-size: 14px;
 
     border: 1px solid var(--border);
     border-radius: 8px;
@@ -754,7 +756,7 @@ select {
     background: var(--button);
     color: var(--button-text);
 
-    font-size: 13px;
+    font-size: 14px;
     font-weight: 700;
 
     text-decoration: none;
@@ -785,7 +787,8 @@ select {
 
         gap: 10px;
 
-        padding: 12px 14px;
+padding: 10px 16px;
+font-size: 14px;
     }
 
 
@@ -811,9 +814,8 @@ select {
     .nav-button {
         min-width: 0;
 
-        padding: 9px 10px;
-
-        font-size: 12px;
+padding: 10px 16px;
+font-size: 14px;
     }
 
 
@@ -893,4 +895,416 @@ select {
         grid-template-columns: 1fr;
     }
 
+}
+
+/* ==========================================
+   会計履歴ページ
+========================================== */
+
+.history-page {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+
+.history-section {
+    background: #ffffff;
+    border: 1px solid #d8dee6;
+    border-radius: 14px;
+    padding: 20px;
+}
+
+
+.history-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 15px;
+    margin-bottom: 20px;
+}
+
+
+.history-header h2 {
+    margin: 0;
+}
+
+
+#historyList {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+
+.history-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 15px;
+
+    padding: 14px 16px;
+
+    background: #f5f7fa;
+    border: 1px solid #d8dee6;
+    border-radius: 10px;
+}
+
+
+.history-info {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+
+.history-date {
+    font-size: 14px;
+    opacity: 0.7;
+}
+
+
+.history-price {
+    font-size: 22px;
+}
+
+
+.history-item-buttons {
+    display: flex;
+    gap: 8px;
+}
+
+
+.history-copy-button,
+.history-delete-button,
+#clearHistoryButton {
+    border: none;
+    border-radius: 8px;
+
+    padding: 9px 14px;
+
+    font-weight: bold;
+    cursor: pointer;
+}
+
+
+.history-copy-button:hover,
+.history-delete-button:hover,
+#clearHistoryButton:hover {
+    opacity: 0.8;
+}
+
+
+.history-empty {
+    text-align: center;
+    opacity: 0.6;
+    padding: 30px;
+}
+
+
+.history-limit {
+    text-align: center;
+    opacity: 0.6;
+    font-size: 13px;
+    margin-top: 20px;
+}
+
+/* ==========================================
+   会計履歴 ダークモード
+========================================== */
+
+body.dark .history-section {
+    background: #1f1f1f;
+    border-color: #3a3a3a;
+}
+
+
+body.dark .history-item {
+    background: #292929;
+    border-color: #444444;
+}
+
+
+body.dark .history-date {
+    color: #bbbbbb;
+}
+
+
+body.dark .history-price {
+    color: #ffffff;
+}
+
+
+body.dark .history-limit,
+body.dark .history-empty {
+    color: #bbbbbb;
+}
+
+/* ==========================================
+   履歴ページ ヘッダー
+========================================== */
+
+.site-header {
+    width: 100%;
+    box-sizing: border-box;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    padding: 10px 20px;
+}
+
+
+.site-header h1 {
+    margin: 0;
+    white-space: nowrap;
+}
+
+
+.header-actions {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 15px;
+
+    margin-left: auto;
+}
+
+
+.page-nav {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+
+    white-space: nowrap;
+}
+
+
+.page-nav a {
+    display: inline-block;
+
+    text-decoration: none;
+    font-weight: bold;
+
+    padding: 8px 10px;
+    border-radius: 8px;
+
+    white-space: nowrap;
+}
+
+
+.page-nav a:hover {
+    background: rgba(128, 128, 128, 0.15);
+}
+
+
+#themeButton {
+    flex-shrink: 0;
+    white-space: nowrap;
+}
+
+/* ==========================================
+   履歴ページ レイアウト修正
+========================================== */
+
+.history-body {
+    display: block;
+    width: 100%;
+    min-height: 100vh;
+}
+
+
+.history-body .site-header {
+    width: 100%;
+    max-width: none;
+
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+
+    box-sizing: border-box;
+}
+
+
+.history-body .header-actions {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 12px;
+
+    margin-left: auto;
+}
+
+
+.history-body .page-nav {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 8px;
+
+    width: auto;
+}
+
+
+.history-body .page-nav a {
+    width: auto;
+    white-space: nowrap;
+}
+
+
+.history-body .history-page {
+    width: 100%;
+    max-width: 900px;
+
+    margin: 0 auto;
+    padding: 20px;
+
+    box-sizing: border-box;
+}
+
+
+.history-body .history-section {
+    width: 100%;
+    box-sizing: border-box;
+}
+
+
+.history-body .history-item {
+    width: 100%;
+    box-sizing: border-box;
+
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+}
+
+
+.history-body .history-info {
+    min-width: 0;
+}
+
+
+.history-body .history-item-buttons {
+    display: flex;
+    flex-direction: row;
+    gap: 8px;
+
+    flex-shrink: 0;
+}
+
+
+.history-body .history-copy-button,
+.history-body .history-delete-button {
+    width: auto;
+    white-space: nowrap;
+}
+
+/* ==========================================
+   ヘッダーナビ ボタン化
+========================================== */
+
+.history-body .page-nav a {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+padding: 10px 16px;
+font-size: 14px;
+
+    background: var(--button);
+    color: var(--button-text);
+
+    border-radius: 8px;
+
+    text-decoration: none;
+    font-weight: bold;
+
+    white-space: nowrap;
+    transition: opacity 0.2s;
+}
+
+
+.history-body .page-nav a:hover {
+    opacity: 0.8;
+}
+
+/* ==========================================
+   共通ページナビ
+========================================== */
+
+.page-nav {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.page-nav a {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    padding: 9px 14px;
+
+    background: var(--button);
+    color: var(--button-text);
+
+    border: 1px solid var(--border);
+    border-radius: 8px;
+
+    text-decoration: none;
+    font-weight: bold;
+
+    white-space: nowrap;
+}
+
+.page-nav a:hover {
+    opacity: 0.8;
+}
+
+.page-nav a.active {
+    background: #9c27b0;
+    color: #ffffff;
+    border-color: #9c27b0;
+}
+
+/* ==========================================
+   カラーページ ナビ修正
+========================================== */
+
+.header-buttons .page-nav {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.header-buttons .page-nav a {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    padding: 9px 14px;
+
+    background: var(--button);
+    color: var(--button-text);
+
+    border: 1px solid var(--border);
+    border-radius: 8px;
+
+    text-decoration: none;
+    font-weight: bold;
+
+    white-space: nowrap;
+}
+
+.header-buttons .page-nav a:hover {
+    opacity: 0.8;
+}
+
+.header-buttons .page-nav a.active {
+    background: #9c27b0;
+    color: #ffffff;
+    border-color: #9c27b0;
 }
